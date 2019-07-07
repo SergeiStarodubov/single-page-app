@@ -1,12 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 </head>
+
 <body>
-  
+  <div class="container mt-5 wrapper">
+    <div class="sample">
+      <!-- <input type="text" v-on:input="name = $event.target.value" v-bind:value="name">
+      <hr>
+      <button class="btn btn-success" v-on:click="isShowed = !isShowed">Click</button>
+      <button class="btn btn-primary" v-on:click="show">toggle name</button>
+      <h2 v-if="isShowed">hello, {{name}}</h2>
+      <template v-else>
+        <h1>Hello</h1>
+        <h1>World</h1>
+      </template>
+      <hr>
+      <hr>
+      <hr> -->
+      <input type="text" v-model="surname">
+      <input type="text" v-model="name">
+      <button v-on:click="clear">Clear</button>
+      <button @click="showText = !showText">toggle</button>
+
+      <h1 v-show="showText">{{setName}}</h1>
+      <hr>
+      <p>input promo: <input type="text" v-model="promoCode"></p>
+      <p>your sale is {{sale}} %</p>
+      <hr>
+      <hr>
+      <hr>
+      <hr>
+      <p><input type="text" v-model="num"><button @click="addNumber">Add number</button></p>
+      <ul>
+        <li v-for="number in numbers">{{number}}</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    const getData = (sale, callback) => {
+      setTimeout(() => {
+        callback(sale)
+      }, 1000)
+    }
+    const sample = new Vue({
+      el: ".sample",
+      data: {
+        name: "",
+        surname: "",
+        isShowed: true,
+        showText: true,
+        promoCode: "",
+        sale: 0,
+        numbers: [1, 23, 4, 5, 5],
+        num: ""
+      },
+      methods: {
+        show() {
+          this.isShowed = !this.isShowed;
+        },
+        clear() {
+          this.surname = "";
+          this.name = ""
+        },
+        addNumber() {
+          this.numbers.push(this.num);
+          this.num = ""
+        }
+      },
+      computed: {
+        setName() {
+          return `${this.name} ${this.surname}`;
+        },
+      },
+      watch: {
+        promoCode() {
+          getData(this.promoCode, (sale) => {
+            if (sale === "hello") this.sale = 10;
+            else this.sale = 0;
+          })
+        }
+      },
+    });
+  </script>
 </body>
+
 </html>
+
+<!-- v-on: === @ -->
