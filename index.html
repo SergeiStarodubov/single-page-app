@@ -41,7 +41,9 @@
       <hr>
       <p><input type="text" v-model="num"><button @click="addNumber">Add number</button></p>
       <ul>
-        <li v-for="number in numbers">{{number}}</li>
+        <li v-for="(number,index) in numbers" @click="$event.target.style.color = $data.color">
+          {{ index!== 0 ? number : ""}}
+        </li>
       </ul>
     </div>
   </div>
@@ -61,7 +63,8 @@
         promoCode: "",
         sale: 0,
         numbers: [1, 23, 4, 5, 5],
-        num: ""
+        num: "",
+        color: 'blue'
       },
       methods: {
         show() {
@@ -73,6 +76,7 @@
         },
         addNumber() {
           this.numbers.push(this.num);
+          this.numbers.sort();
           this.num = ""
         }
       },
