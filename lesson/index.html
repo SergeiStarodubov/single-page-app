@@ -7,15 +7,36 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <title>Document</title>
+  <script src="./lesson1.js" defer>
+  </script>
 </head>
 
 <body>
   <div class="root">
-    <input type="text">
+    <input type="text" v-model.trim="name" @keyup.enter="show">
     <button type="button">Click</button>
+    <h1>{{name}}</h1>
+    <h1 :class="className">Hello wordld</h1>
+    <p>
+      <input type="radio" v-model="some" value="info">
+      world
+    </p>
+    <p>
+      <input type="radio" v-model="some" value="World">
+      hello
+    </p>
+    <div :style="properties">Hello world</div>
+    <table class="table table-bordered">
+      <tr v-for="(value, key) in properties">
+        <td>{{key}}</td>
+        <td>
+          <input type="text" v-model="properties[key]">
+        </td>
+      </tr>
+    </table>
   </div>
 </body>
 
