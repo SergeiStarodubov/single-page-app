@@ -1,60 +1,71 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div id="app" class = "container mt-5 text-center">
+    <Quastion :task="tasks[index]"
+      @passToParent="getDataFromChildren"
+      @openButton = "changeDisableButton"
+      v-if="index < tasks.length"
+     />
+     <Answers
+      v-else
+      :data = "response"
+      :quiz = "tasks"
+     />
+    <button 
+      v-show= "index < tasks.length" 
+      type="button" 
+      class="btn btn-secondary" 
+      :disabled = "buttonDisabled" 
+      @click="setNext"
+      >Next
+    </button>
   </div>
 </template>
 
 <script>
+
+  import Quastion from './components/Quastion.vue'
+  import Answers from './components/Answers.vue'
+
 export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  data() {
+    return{
+      index: 0,
+      buttonDisabled: true,
+      tasks: [
+        {
+          quas: "What kind of programming paradigm do you use?",
+          ans: ["OOP", "Functional paradigm", "declorative paradigm", "imperative paradigm"],
+          type: "checkbox"
+        },
+        {
+          quas: "What kind of language is more popular in web development?",
+          ans: ["visual basic", "javascript", "c++", "assambler"],
+          type: "radio"
+        },
+      ],
+      response: [],
+      curRes: ""
+    }
+  },
+  components: {
+    Quastion,
+    Answers
+  },
+  methods: {
+    setNext() {
+      this.index++;
+      this.buttonDisabled = true;
+      this.response.push(this.curRes);
+    },
+    getDataFromChildren(data) {
+      this.curRes = data;
+    },
+    changeDisableButton(bool) {
+      this.buttonDisabled = bool
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
